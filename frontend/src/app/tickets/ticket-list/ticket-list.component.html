@@ -1,0 +1,58 @@
+<!-- Formulário de abertura de chamado -->
+<app-ticket-form (ticketCreated)="onTicketCreated()" />
+
+<!-- Mensagem de erro -->
+@if (errorMessage) {
+  <p class="error-message">{{ errorMessage }}</p>
+}
+
+<!-- Seção: Chamados Abertos -->
+<div class="status-section">
+  <h2>Chamados Abertos ({{ openTickets.length }})</h2>
+
+  @if (openTickets.length > 0) {
+    @for (ticket of openTickets; track ticket.id) {
+      <div class="ticket-card">
+        <h3>{{ ticket.title }}</h3>
+        <p>{{ ticket.description }}</p>
+        <div class="ticket-actions">
+          <!-- Fechar chamado -->
+          <button class="btn btn-success" (click)="closeTicket(ticket)">
+            Fechar
+          </button>
+          <!-- Remover chamado -->
+          <button class="btn btn-danger" (click)="deleteTicket(ticket)">
+            Remover
+          </button>
+        </div>
+      </div>
+    }
+  } @else {
+    <p class="empty-state">Nenhum chamado aberto.</p>
+  }
+</div>
+
+<!-- Seção: Chamados Fechados -->
+<div class="status-section">
+  <h2>Chamados Fechados ({{ closedTickets.length }})</h2>
+
+  @if (closedTickets.length > 0) {
+    @for (ticket of closedTickets; track ticket.id) {
+      <div class="ticket-card closed">
+        <h3>{{ ticket.title }}</h3>
+        <p>{{ ticket.description }}</p>
+        <div class="ticket-actions">
+          <!-- Reabrir chamado -->
+          <button class="btn btn-warning" (click)="reopenTicket(ticket)">
+            Reabrir
+          </button>
+          <button class="btn btn-danger" (click)="deleteTicket(ticket)">
+            Remover
+          </button>
+        </div>
+      </div>
+    }
+  } @else {
+    <p class="empty-state">Nenhum chamado fechado.</p>
+  }
+</div>
